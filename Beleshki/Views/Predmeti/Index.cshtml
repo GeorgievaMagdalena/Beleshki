@@ -1,0 +1,79 @@
+﻿@model IEnumerable<Beleshki.Models.Predmet>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Index</h1>
+
+@if (User.Identity.IsAuthenticated && User.IsInRole("Admin"))
+  {
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+  }
+<p>
+    <form method="get" action="@Url.Action("Index")">
+        <div>
+            <label for="nat">Kod:</label>
+            <input type="text" id="searchKod" name="searchKod" value="@ViewBag.CurrentFilter" />
+
+            <input type="submit" value="Filter" />
+        </div>
+    </form>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.PredmetIme)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Kod)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Krediti)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Institut)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.StudiskaGodina)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.PredmetIme)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Kod)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Krediti)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Institut)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.StudiskaGodina)
+            </td>
+            <td>
+                    @if (User.Identity.IsAuthenticated && User.IsInRole("Admin"))
+                    {
+                        <a asp-action="Edit" asp-route-id="@item.Id">Edit</a>
+                    }
+                    |
+                    <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
+                    @if (User.Identity.IsAuthenticated && User.IsInRole("Admin"))
+                    {
+                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                    }
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

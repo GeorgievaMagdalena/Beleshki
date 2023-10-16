@@ -1,0 +1,125 @@
+﻿@model Beleshki.ViewModels.BeleshkaFakultet
+
+@{
+    ViewData["Title"] = "Index";
+}
+<h1>Index</h1>
+@if (User.Identity.IsAuthenticated && !User.IsInRole("Admin"))
+{
+    <p>
+        <a asp-action="Create">Create New</a>
+    </p>
+}
+
+<form asp-controller="Beleshki" asp-action="Index" method="get">
+    <p>
+         <select asp-for="searchFakultet" asp-items="Model.Fakulteti">
+        <option value="">All</option>
+        </select>
+        Predmet: <input type="text" asp-for="searchPredmet" />
+        <input type="submit" value="Filter" />
+    </p>
+</form>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Beleshkii[0].BeleshkaIme)
+            </th>
+            <th>
+                Datum Kreiranje
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Beleshkii[0].Opis)
+            </th>
+            @if (User.Identity.IsAuthenticated && !User.IsInRole("Admin"))
+{
+            <th>
+                Dodadi vo tvoi
+            </th>
+}
+            @if (!User.Identity.IsAuthenticated)
+            {
+                <th>
+                    Dodadi vo tvoi
+                </th>
+                
+            }
+            <th>
+                @Html.DisplayNameFor(model => model.Beleshkii[0].Predmet)
+            </th>
+            <th>Fakultet</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+
+        @foreach (var beleshka in Model.Beleshkii)
+        {
+            <tr>
+                <td>@beleshka.BeleshkaIme</td>
+
+                <td>
+                    @{
+                        if (beleshka.DatumKreiranje.HasValue)
+                        {
+                            @beleshka.DatumKreiranje.Value.ToString("yyyy-MM-dd")
+                        }
+                        else
+                        {
+                            <span>Null Date</span>
+                        }
+                    }
+                </td>
+
+                <td>@beleshka.Opis</td>
+                @if (User.Identity.IsAuthenticated && !User.IsInRole("Admin"))
+                {
+                    <td>
+                        <a href="@Url.Action("DodadiTvoi", "StudentBeleshki", new { beleshkaId = beleshka.Id })">Dodadi vo Tvoi Beleshki</a>
+                </td>
+                } @if (!User.Identity.IsAuthenticated && !User.IsInRole("Admin"))
+                {
+                <td>
+                        <a href="/Identity/Account/Register">Registriraj se</a>
+                </td>
+                }
+                <td>@beleshka.Predmet.PredmetIme</td>
+                <td>
+                    @{
+                        var fakultetName = beleshka.Predmet
+                            ?.predmetFakulteti
+                            ?.FirstOrDefault()
+                            ?.Fakultet
+                            ?.FakultetIme;
+
+                        if (!string.IsNullOrEmpty(fakultetName))
+                        {
+                            @fakultetName
+                        }
+                        else
+                        {
+                            <span>No Faculty</span>
+                        }
+                    }
+                </td>
+                <td>
+                    @if (User.Identity.IsAuthenticated && User.IsInRole("Admin"))
+                    {
+                        <!--<a asp-action="Edit" >Edit</a> -->
+                    }
+                    
+                    <a asp-action="Details" asp-route-id="@beleshka.Id">Details</a>
+                    @if (User.Identity.IsAuthenticated && User.IsInRole("Admin"))
+                    {
+                        <a asp-action="Delete" asp-route-id="@beleshka.Id">Delete</a>
+                    }
+                </td>
+            </tr>
+        }
+                
+               
+            
+    </tbody>
+</table>

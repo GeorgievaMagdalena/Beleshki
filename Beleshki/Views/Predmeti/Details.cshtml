@@ -1,0 +1,61 @@
+﻿@model Beleshki.Models.Predmet
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<h1>Details</h1>
+
+<div>
+    <h4>Predmet</h4>
+    <hr />
+    <dl class="row">
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.PredmetIme)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.PredmetIme)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Kod)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Kod)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Krediti)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Krediti)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Institut)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Institut)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.StudiskaGodina)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.StudiskaGodina)
+        </dd>
+        <dt class="col-sm-2">
+            Beleshki po ovoj predmet
+        </dt>
+        <dd class="col-sm-10">
+            @{
+                var beleshki = ViewBag.Beleshki as List<string>;
+            }
+
+            @foreach (var beleshka in beleshki)
+            {
+                <p>@beleshka</p>
+            }
+        </dd>
+    </dl>
+</div>
+<div>
+    <a asp-action="Edit" asp-route-id="@Model?.Id">Edit</a> |
+    <a asp-action="Index">Back to List</a>
+</div>

@@ -1,0 +1,53 @@
+﻿@model Beleshki.Models.Predmet
+
+@{
+    ViewData["Title"] = "Create";
+}
+
+<h1>Create</h1>
+
+<h4>Predmet</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Create">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="PredmetIme" class="control-label"></label>
+                <input asp-for="PredmetIme" class="form-control" />
+                <span asp-validation-for="PredmetIme" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Kod" class="control-label"></label>
+                <input asp-for="Kod" class="form-control" />
+                <span asp-validation-for="Kod" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Krediti" class="control-label"></label>
+                <input asp-for="Krediti" class="form-control" />
+                <span asp-validation-for="Krediti" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Institut" class="control-label"></label>
+                <input asp-for="Institut" class="form-control" />
+                <span asp-validation-for="Institut" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="StudiskaGodina" class="control-label"></label>
+                <input asp-for="StudiskaGodina" class="form-control" />
+                <span asp-validation-for="StudiskaGodina" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
